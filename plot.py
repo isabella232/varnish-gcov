@@ -11,7 +11,7 @@ from datetime import datetime, timedelta
 import os
 
 data = {}
-for l in file("statfile.txt"):
+for l in file("Html/statfile.txt"):
     (ts, path, g, b, t) = l.strip().split(" ")
     ts = float(ts)
     g = int(g)
