@@ -25,7 +25,7 @@ make 2>&1 | tee _.make
     ./varnishd --help > /dev/null 2>&1 || true
 )
 make check | tee _.test
-find -name \*.o -execdir gcov {} \;
+find -name \*.c -execdir gcov -o . -o .libs {} \;
 )
 find varnish-cache -name '*.gcov' -print | ./gcov_fmt.py >> Html/statfile.txt
 ./plot.py
