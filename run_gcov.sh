@@ -28,7 +28,8 @@ git clone git://git.varnish-cache.org/varnish-cache
     make check | tee _.test
     lcov --directory `pwd` --capture --output-file varnish.info
 )
-./lcov_fmt.py < varnish.info >> Html/statfile.txt
+./lcov_fmt.py < varnish-cache/varnish.info >> Html/statfile.txt
+genhtml --output-directory=Html/varnish-cache varnish-cache/varnish.info
 ./plot.py
 cd Html
 git add .
