@@ -1,5 +1,10 @@
 #! /usr/bin/python
 
+import os
+from sys import argv
+from datetime import datetime, timedelta
+from os.path import join
+
 import numpy as np
 import matplotlib
 matplotlib.use('Agg')
@@ -7,11 +12,9 @@ import matplotlib.pyplot as plt
 import matplotlib.mlab as mlab
 import matplotlib.cbook as cbook
 import matplotlib.ticker as ticker
-from datetime import datetime, timedelta
-import os
 
 data = {}
-for l in file("Html/statfile.txt"):
+for l in file(join(argv[1], "statfile.txt")):
     (ts, path, g, b, t) = l.strip().split(" ")
     ts = float(ts)
     g = int(g)
@@ -35,12 +38,7 @@ for f in data.keys():
     plt.fill_between(ts, t, g, alpha=0.8, color="gray")
     fig.autofmt_xdate()
     if f == "TOTAL":
-        fig.savefig("Html/total.png")
+        fig.savefig(join(argv[1], "total.png"))
     else:
-        outfile = "Html/%s.png" % (f,)
-        try:
-            os.makedirs(os.path.dirname(outfile))
-        except OSError:
-            pass
-
+        outfile = join(argv[1], "%s.png" % (f,))
         fig.savefig(outfile)
