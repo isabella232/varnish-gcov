@@ -9,17 +9,18 @@ This code lives in git on https://github.com/varnish/varnish-gcov .
 Prerequsites
 ------------
 
-::
-    apt-get install lcov
+On Debian::
+
+    # apt-get install lcov
+
 
 
 Running
 -------
 
 Main script is "collect", which uses the git checkout in ``varnish-cache/``. It
-will write to a tracefile given in the first argument.
+will write to a tracefile given in the first argument::
 
-::
     $ ./collect master.info
     [..]
     $ lcov --summary var/master.info
