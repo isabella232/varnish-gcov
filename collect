@@ -1,0 +1,27 @@
+#!/bin/bash -x
+#
+set -e
+cd $(dirname $0)
+OUTPUT=../var/varnish.info
+if [ -n "$1" ]; then
+	OUTPUT=../var/$1
+fi
+
+if [ ! -d "varnish-cache" ]; then
+	git clone git://git.varnish-cache.org/varnish-cache
+fi
+cd varnish-cache
+export CFLAGS="-fprofile-arcs -ftest-coverage -fstack-protector"
+sh autogen.sh
+./configure --enable-debugging-symbols --quiet
+make 2>&1 | tee _.make
+lcov --directory `pwd` --zerocounters
+    (
+    # Get usage() run
+	cd bin/varnishd
+	./varnishd --help > /dev/null 2>&1 || true
+    )
+
+make check | tee _.test
+lcov --directory `pwd` --capture --output-file $OUTPUT
+cd ..
